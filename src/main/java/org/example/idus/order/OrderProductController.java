@@ -2,6 +2,7 @@ package org.example.idus.order;
 
 import lombok.RequiredArgsConstructor;
 import org.example.idus.member.model.Member;
+import org.example.idus.member.model.MemberDto;
 import org.example.idus.order.model.OrderProductDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -29,6 +30,17 @@ public class OrderProductController {
     @GetMapping("/list/{memberIdx}")
     public ResponseEntity<OrderProductDto.ListResponse> list(@PathVariable Long memberIdx) {
         List<OrderProductDto.OrderResponse> result = orderProductService.list(memberIdx);
+
+        return ResponseEntity.ok(OrderProductDto.ListResponse.success(result));
+    }
+
+    /*
+     * 여러 회원의 목록 조회
+     * */
+
+    @GetMapping("/listAll")
+    public ResponseEntity<OrderProductDto.ListResponse> listAll() {
+        List<OrderProductDto.OrderResponse> result = orderProductService.listAll();
 
         return ResponseEntity.ok(OrderProductDto.ListResponse.success(result));
     }
