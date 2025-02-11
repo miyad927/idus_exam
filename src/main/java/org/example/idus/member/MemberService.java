@@ -53,4 +53,10 @@ public class MemberService implements UserDetailsService {
             memberRepository.save(member);
         }
     }
+
+    @Transactional(readOnly = true)
+    public MemberDto.MemberResponse read(Long memberIdx) {
+        Member member = memberRepository.findById(memberIdx).orElseThrow();
+        return MemberDto.MemberResponse.from(member);
+    }
 }
