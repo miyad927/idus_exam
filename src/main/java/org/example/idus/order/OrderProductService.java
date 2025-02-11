@@ -2,6 +2,7 @@ package org.example.idus.order;
 
 import lombok.RequiredArgsConstructor;
 import org.example.idus.member.model.Member;
+import org.example.idus.member.model.MemberDto;
 import org.example.idus.order.model.OrderProduct;
 import org.example.idus.order.model.OrderProductDto;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.stream.Collectors;
 
@@ -53,5 +55,16 @@ public class OrderProductService {
         List<OrderProduct> feedList = orderProductRepository.findAllByMemberIdx(memberIdx);
 
         return feedList.stream().map(OrderProductDto.OrderResponse::from).collect(Collectors.toList());
+    }
+
+//    public OrderProductDto.OrderResponse listAll() {
+//        OrderProduct order = orderProductRepository.findFirstByOrderByIdxDesc();
+//        return OrderProductDto.OrderResponse.from(order);
+//    }
+
+    public List<OrderProductDto.OrderResponse> listAll() {
+        List<OrderProduct> orderList = orderProductRepository.findByOrderByIdxDesc();
+
+        return orderList.stream().map(OrderProductDto.OrderResponse::from).collect(Collectors.toList());
     }
 }
