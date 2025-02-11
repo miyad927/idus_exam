@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.example.idus.emailverify.model.EmailVerify;
+import org.example.idus.order.model.OrderProduct;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -33,6 +34,9 @@ public class Member implements UserDetails {
     private boolean enabled;
     @OneToMany(mappedBy = "member")
     private List<EmailVerify> emailVerifyList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
+    private List<OrderProduct> orderList = new ArrayList<>();
 
     public void verify() {
         this.enabled = true;
