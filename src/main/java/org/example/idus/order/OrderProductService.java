@@ -6,10 +6,13 @@ import org.example.idus.order.model.OrderProduct;
 import org.example.idus.order.model.OrderProductDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -44,5 +47,11 @@ public class OrderProductService {
         }
 
         return sb.toString();
+    }
+
+    public List<OrderProductDto.OrderResponse> list(@PathVariable Long memberIdx) {
+        List<OrderProduct> feedList = orderProductRepository.findAllByMemberIdx(memberIdx);
+
+        return feedList.stream().map(OrderProductDto.OrderResponse::from).collect(Collectors.toList());
     }
 }
