@@ -1,7 +1,6 @@
 package org.example.idus.member;
 
 import lombok.RequiredArgsConstructor;
-import org.example.idus.emailverify.EmailVerifyService;
 import org.example.idus.member.model.Member;
 import org.example.idus.member.model.MemberDto;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,7 +17,6 @@ import java.util.Optional;
 public class MemberService implements UserDetailsService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
-    private final EmailVerifyService emailVerifyService;
 
     @Transactional
     public void signup(MemberDto.SignupRequest dto) {
@@ -27,9 +25,6 @@ public class MemberService implements UserDetailsService {
         System.out.println(encodedPassword);
 
         Member member = memberRepository.save(dto.toEntity(encodedPassword));
-
-        emailVerifyService.signup(member.getIdx(), member.getEmail());
-
     }
 
     @Override
