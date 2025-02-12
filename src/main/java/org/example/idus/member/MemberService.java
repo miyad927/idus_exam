@@ -45,15 +45,6 @@ public class MemberService implements UserDetailsService {
         return null;
     }
 
-    @Transactional
-    public void verify(String uuid) {
-        Member member = emailVerifyService.verify(uuid);
-        if(member != null) {
-            member.verify();
-            memberRepository.save(member);
-        }
-    }
-
     @Transactional(readOnly = true)
     public MemberDto.MemberResponse read(Long memberIdx) {
         Member member = memberRepository.findById(memberIdx).orElseThrow();
